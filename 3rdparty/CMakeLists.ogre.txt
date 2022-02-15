@@ -1,0 +1,17 @@
+#ogre3d setup
+configure_file(3rdparty/CMakeLists.ogre.in ogre-download/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+RESULT_VARIABLE result
+WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/ogre-download )
+if(result)
+    message(FATAL_ERROR "CMake step for ogre failed: ${result}")
+endif()
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+RESULT_VARIABLE result
+WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/ogre-download )
+if(result)
+    message(FATAL_ERROR "Build step for ogre failed: ${result}")
+endif()
+set(LOG_DIR "${CMAKE_CURRENT_BINARY_DIR}/ogre-src")
+set(LOG_INCLUDE_DIR "${LOG_DIR}/include")
+add_subdirectory(${LOG_DIR})
